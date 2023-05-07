@@ -1,0 +1,91 @@
+------------------------ Implementing Infinite Scroll for a React app ----------------------------
+
+--Idea:
+
+A web design technique where, as the user scrolls down a page, more content automatically and continuously loads at the bottom, eliminating the user’s need to click to the next page.
+
+
+--Our Use Case:
+
+Infinite Scroll - If we have some API data which we want to display onto the page but not everything on the go but as we scroll down the document; we want the new 
+additional data to be loading on to the page, like let's say we will be doing an API call with the page no and keeping the page no as the dependecy array
+
+
+--Logic:
+
+We will be playing with scroll event: 
+
+
+Snippet 1:
+-------------------------------------------------
+
+const handelInfiniteScroll = async () => {
+    //console.log("scrollHeight" + document.documentElement.scrollHeight);
+    //console.log("scrollTop" + document.documentElement.scrollTop);
+    //console.log("innerHeight" + window.innerHeight);
+
+    if (
+      document.documentElement.scrollTop + window.innerHeight + 1 >=
+      document.documentElement.scrollHeight
+    ) {
+      setPage((prevPage) => prevPage + 1);
+      console.log(page);
+    }
+  };
+
+
+
+useEffect(() => {
+    window.addEventListener("scroll", handelInfiniteScroll);
+    return () => window.removeEventListener("scroll", handelInfiniteScroll);
+  }, []);
+
+-----------------------------------------------------
+
+the function handelInfiniteScroll is called on the scroll-event once the component is mounted for the first time
+and now on every scroll event we can console the output on the screen
+
+
+in the function:
+
+Snippet 2:
+------------------------------
+
+handelInfiniteScroll
+
+if (
+      document.documentElement.scrollTop + window.innerHeight + 1 >=
+      document.documentElement.scrollHeight
+    ) {
+      setPage((prevPage) => prevPage + 1);
+      console.log(page);
+    }
+
+    **this is the most important step out here as we are trying to check the condition in the if case:
+
+    this means that once we get the condition as true we will be updating the state variable page and once the page value is updated the getCardInfo function is called as the page is the dependency array there
+
+    ----------------------------------------------------------------------------
+
+    const getCardInfo = async () => {
+        const data = await fetch(
+        "https://jsonplaceholder.typicode.com/posts?_limit=9&_page=" + page
+        );
+
+        //console.log(data);
+        const json = await data.json();
+        console.log(json);
+        setCard((prev) => [...prev, ...json]);
+    };
+
+
+    useEffect(() => {
+        getCardInfo();
+    }, [page]);
+
+    the card state variable is updated - setCard((prev) => [...prev, ...json]);
+
+    --this logic says that we want to retain the previous array data but append the new value on to the previous array and that is the reason we use spread operation here.
+
+    Now as the card changes the Movies component and in turn MovieCard is re-rendered.
+
