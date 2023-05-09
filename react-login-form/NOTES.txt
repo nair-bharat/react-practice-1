@@ -1,0 +1,197 @@
+------------------- FORMIK ------------------
+
+
+Formikis a small library that helps you deal with forms in react.
+
+Why?
+1. Managing form data
+2. Form submission
+3. Form validaton and displaying error messages.
+
+Formik helps deal with forms in scalable, perfomant and easy way.
+
+-------------
+
+SIMPLE FORM
+
+We will be creating a simple form wherein it will take three inputs - name, email and channel and we can submit the form.
+
+--------------------
+
+useFormik hook - this hook is coming from formik where it has many objects which we will see.
+
+using Formik we can do the following:
+
+1. Managing form state
+2. Handling form submission
+3. Validation and error messages
+
+--------------------------------
+
+1. Managing form state ---
+
+values object will contain values for all the form fields. Flow is - when we change the values in the field the onChange event is triggered, and which in turn 
+fires the handleChange which will update the values object.
+
+When the values object updates, it is passed back into the form field.
+
+formik.values - contains all the values of the form fields.
+
+--------------------------------
+
+2. Handling Form Submission:
+
+
+do couple of things - 
+1. add onSubmit to the form tag:
+<form onSubmit={formik.submitForm}></form>
+
+2. onSubmit: (values) => {
+      console.log("Form data", values);
+    },
+
+-----------------
+
+Form validation rules:
+
+1. Add required to all the fields and email format
+---------------------
+
+
+adding validation rules:
+
+We make use of validate function which takes values as the argument,
+here we have 3 conditions:
+
+1. We have to return an object from this function and we have used errors and returned that.
+2. The errors.name, errors.email and errors.channel are from the initialValues object names.
+3. The proper error messages should be assigned to each of the errors object properties.
+
+
+
+---------------------------------
+
+8. displaying error messages.
+
+<div className="error">{formik.errors.name}</div>
+
+it is rendered on to the screen.
+
+console.log("Formik errors", formik.errors); - we can console the error messages on to the screen.
+
+---------------------------------
+
+9. Visited fields
+
+do the following 2 steps:
+
+1. onBlur={formik.handleBlur} to each of the input fields
+2. to now see what fields have been visited do:
+
+    console.log("Visited fields", formik.touched);
+
+--------------------------------------
+
+10. Improving validation UX
+
+Adding conditional statements:
+
+{formik.touched.channel && formik.errors.channel}
+
+We are handling the onBlur event of the input fields. We used the touched object to conditionally render the messages thus imporving the UX experience.
+
+
+-----------------------------------
+
+11. Schema validation using Yup
+
+const validationSchema = Yup.object({
+    name: Yup.string().required("Required"),
+    email: Yup.string().email("Invalid e-mail format").required("Required"),
+    channel: Yup.string().required("Required"),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    //validate,
+    validationSchema,
+  });
+
+
+  ---------------------------------
+
+  12. Reducing boilerplate
+
+
+Instead of this code:
+onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.channel}
+
+
+We will be replacing with this piece of code.
+  {...formik.getFieldProps("email")}
+
+
+  -------------------------------
+
+  13. Formik components
+    Formik
+    Form
+    Field
+    ErrorMessage
+
+    Formik--
+
+
+    there are some steps:
+
+    const formik = useFormik({
+    initialValues,
+    onSubmit,
+    //validate,
+    validationSchema,
+  });
+
+  remove this and replace with 
+
+  <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+
+
+  instead of importing useFormik hook, instead import Formik component : import { Formik } from "formik";
+
+  This will now act as a context provider for other components.
+
+  -------------------------------
+
+  14. Form component
+
+  form onSubmit={formik.submitForm} - replace with Form compnent - no need to add onSubmit method as <Form> handles it automatically.
+
+
+  ---------------------------
+
+  15. Field component:
+
+  replace input tag with Field component & remove this - {...formik.getFieldProps("name")} as Form component will handle it internally.
+
+
+  -------------------------
+
+
+  16. ErrorMessage Component
+
+replace {formik.errors.name ? (
+            <div className="error">
+              {formik.touched.name && formik.errors.name}
+            </div>
+          ) : null} 
+
+          with <ErrorMessage name='name' /> & so on
+
+
+
+In this way we have refactored our whole code from OldYoutubeForm.jsx to YouTubeForm.jsx
+
+
