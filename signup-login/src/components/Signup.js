@@ -4,6 +4,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 const Signup = () => {
   const [signupEmail, setSignupEmail] = useState("");
   const [sigupPass, setSignupPass] = useState("");
+  const [error, setError] = useState(null);
+  const [pending, setPending] = useState(false);
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -11,7 +13,11 @@ const Signup = () => {
     try {
       await createUserWithEmailAndPassword(projectAuth, signupEmail, sigupPass);
     } catch (err) {
-      console.log(err);
+      setError(err);
+      {
+        /*
+        console.log(err.message);*/
+      }
     }
 
     setSignupEmail("");
@@ -30,6 +36,7 @@ const Signup = () => {
         required
       />
       {/*console.log(signupEmail, sigupPass)*/}
+
       <input
         type="password"
         value={sigupPass}

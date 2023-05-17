@@ -2939,7 +2939,7 @@ const App = ()=>{
     _s();
     const [page, setPage] = (0, _react.useState)("signup");
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: page === "signup" ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupDefault.default), {}, void 0, false, {
+        children: page !== "signup" ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupDefault.default), {}, void 0, false, {
             fileName: "App.js",
             lineNumber: 10,
             columnNumber: 36
@@ -27336,12 +27336,14 @@ const Signup = ()=>{
     _s();
     const [signupEmail, setSignupEmail] = (0, _react.useState)("");
     const [sigupPass, setSignupPass] = (0, _react.useState)("");
+    const [error, setError] = (0, _react.useState)(null);
+    const [pending, setPending] = (0, _react.useState)(false);
     const handleSignupSubmit = async (e)=>{
         e.preventDefault();
         try {
             await (0, _auth.createUserWithEmailAndPassword)((0, _firebase.projectAuth), signupEmail, sigupPass);
         } catch (err) {
-            console.log(err);
+            setError(err);
         }
         setSignupEmail("");
         setSignupPass("");
@@ -27359,7 +27361,7 @@ const Signup = ()=>{
                 required: true
             }, void 0, false, {
                 fileName: "src/components/Signup.js",
-                lineNumber: 23,
+                lineNumber: 29,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -27372,24 +27374,24 @@ const Signup = ()=>{
                 required: true
             }, void 0, false, {
                 fileName: "src/components/Signup.js",
-                lineNumber: 33,
+                lineNumber: 40,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 children: "Signup"
             }, void 0, false, {
                 fileName: "src/components/Signup.js",
-                lineNumber: 42,
+                lineNumber: 49,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Signup.js",
-        lineNumber: 22,
+        lineNumber: 28,
         columnNumber: 5
     }, undefined);
 };
-_s(Signup, "NIgnDuC++FfT+F2r/Y3E/vL2UV0=");
+_s(Signup, "TxF0bkQ+hFMjg+2/95M+qowzmGU=");
 _c = Signup;
 exports.default = Signup;
 var _c;
@@ -40329,12 +40331,27 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _firebase = require("../config/firebase");
+var _auth = require("firebase/auth");
 var _s = $RefreshSig$();
 const Login = ()=>{
     _s();
     const [loginEmail, setLoginEmail] = (0, _react.useState)("");
     const [loginPass, setLoginPass] = (0, _react.useState)("");
+    const [error, setError] = (0, _react.useState)(null);
+    const handleLoginSubmit = async (e)=>{
+        e.preventDefault();
+        try {
+            await (0, _auth.signInWithEmailAndPassword)((0, _firebase.projectAuth), loginEmail, loginPass);
+        } catch (err) {
+            setError(err);
+            console.log("unsuccessful login");
+        }
+        setLoginEmail("");
+        setLoginPass("");
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+        onSubmit: (e)=>handleLoginSubmit(e),
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                 type: "email",
@@ -40346,7 +40363,7 @@ const Login = ()=>{
                 required: true
             }, void 0, false, {
                 fileName: "src/components/Login.js",
-                lineNumber: 8,
+                lineNumber: 30,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -40359,7 +40376,7 @@ const Login = ()=>{
                 required: true
             }, void 0, false, {
                 fileName: "src/components/Login.js",
-                lineNumber: 17,
+                lineNumber: 39,
                 columnNumber: 7
             }, undefined),
             console.log(loginEmail, loginPass),
@@ -40367,17 +40384,17 @@ const Login = ()=>{
                 children: "Login"
             }, void 0, false, {
                 fileName: "src/components/Login.js",
-                lineNumber: 27,
+                lineNumber: 49,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Login.js",
-        lineNumber: 7,
+        lineNumber: 29,
         columnNumber: 5
     }, undefined);
 };
-_s(Login, "YVYWZT9Sn/0/ZLgHGfjOXmeNGrA=");
+_s(Login, "xmy1TRkKqsd/q6XkLs08HO/rk1M=");
 _c = Login;
 exports.default = Login;
 var _c;
@@ -40388,6 +40405,6 @@ $RefreshReg$(_c, "Login");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","lyZ4E","2Ew96"], "2Ew96", "parcelRequire079b")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../config/firebase":"dnkF6","firebase/auth":"79vzg"}]},["1xC6H","lyZ4E","2Ew96"], "2Ew96", "parcelRequire079b")
 
 //# sourceMappingURL=index.7826abd7.js.map

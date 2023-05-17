@@ -7,7 +7,7 @@ import Login from "./src/components/Login";
 const App = () => {
   const [page, setPage] = useState("signup");
 
-  return <div>{page === "signup" ? <Signup /> : <Login />}</div>;
+  return <div>{page !== "signup" ? <Signup /> : <Login />}</div>;
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
