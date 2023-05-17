@@ -194,4 +194,51 @@ replace {formik.errors.name ? (
 
 In this way we have refactored our whole code from OldYoutubeForm.jsx to YouTubeForm.jsx
 
+17. Journey so far
+
+Simple form with three fields.
+useFormik hook.
+Managing form state, handling form submission and form validation
+initialValues object + formik.handleChange
+onSubmit method + formik.handleSubmit
+Validate function
+validationSchema object
+formik.errors and formik.touched
+Formik components - Formik, Form, Field and ErrorMessage
+
+18. Field revisited:
+
+    We are passing props here and trying to check how to create custom component if we require to create one, here we have used address field to test and check.
+
+    const { field, form, meta } = props;
+    return (
+                <div>
+                  <input type="text" id="address" {...field} />
+                  {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+                </div>
+              );
+
+
+19. ErrorMessage revisited:
+
+    <div className="form-control">
+          <label htmlFor="name">Name</label>
+          <Field type="text" id="name" name="name" />
+          <ErrorMessage name="name" component={TextError} />
+        </div>
+        <div className="form-control">
+          <label htmlFor="email">E-mail</label>
+          <Field type="email" id="email" name="email" />
+
+          <ErrorMessage name="email">
+            {(errorMsg) => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
+        </div>
+
+20. Nested objects
+
+
+
+
+
 
